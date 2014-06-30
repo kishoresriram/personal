@@ -121,6 +121,7 @@ namespace exportresstrings
             Details d = new Details();
             UnManagedDetails unmanDetails = new UnManagedDetails();
             string rcPath = "";
+            string resDLLName = "";
             //string rcPath = @"\\hydzbhifs\BHRDSSEZ\Daily\WorkArea\Sriram\joaJewelSuiteResources_en_us\joaJewelSuiteResources_en_us.rc";
 
             string[] subFolderArray = Directory.GetDirectories(pathforrcfiles);
@@ -139,6 +140,13 @@ namespace exportresstrings
                     string folderName = subFolderArray[folderCount];
 
                     string[] files = Directory.GetFiles(subFolderArray[folderCount], "*_en_us.rc", SearchOption.AllDirectories);
+
+                    //for sln name - dll
+                    string[] slnFile = Directory.GetFiles(subFolderArray[folderCount], "*.sln", SearchOption.AllDirectories);
+                    if (slnFile.Length > 0)
+                    {
+                        resDLLName = slnFile[0].Substring(slnFile[0].LastIndexOf(@"\") + 1);
+                    }
                     rcPath = files[0].ToString();
                     if (rcPath != null)
                     {
@@ -155,7 +163,7 @@ namespace exportresstrings
                                 while (!((line = reader.ReadLine()) == "END"))
                                 {
                                     string[] s1 = line.Split('"');
-                                    d.ResourceDLL = "UNMANAGED";
+                                    d.ResourceDLL = resDLLName;
                                     d.ResourceID = s1[0].Trim();
                                     d.EngText = s1[1].Trim();
                                     resList.Add(d);
