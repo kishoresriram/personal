@@ -1,0 +1,105 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    Basics1                 ".NET Framework Install Info"
+    Basics2                 " more read unlocks than read locks encountered"
+    Basics3                 " no lock encountered, read lock is needed"
+    Basics4                 " read lock encountered, write lock is needed"
+    Basics5                 " is not locked, write lock is needed"
+    Basics6                 " is not accessible, it is locked by another Jewel process."
+    Basics7                 " is in use"
+    Basics8                 "OS version: WIN95"
+    Basics9                 "OS version: WIN98"
+    Basics10                "OS version: WINME"
+    Basics11                "OS version: WINNT351"
+END
+
+STRINGTABLE
+BEGIN
+    Basics12                "OS version: WINNT4"
+    Basics13                "OS version: WIN2000"
+    Basics14                "OS version: WINXP_64"
+    Basics15                "OS version: WINXP_32"
+    Basics16                "OS version: WIN2003_64"
+    Basics17                "OS version: WIN2003_32"
+    Basics18                "OS version: WINVISTA_64"
+    Basics19                "OS version: WINVISTA_32"
+    Basics20                "Standard Edition "
+    Basics21                "Server 4.0, Enterprise Edition "
+    Basics22                "Starting JewelSuite 2009 code compatibility mode. JewelSuite will not respond until all jobs are finished."
+    Basics23                "Advanced Server "
+    Basics24                "Datacenter Server "
+    Basics25                "for that particular lock counter increase.  This means the stack recorded"
+    Basics26                "The read lock is being released without being held."
+    Basics27                "The write lock is being released without being held."
+END
+
+STRINGTABLE
+BEGIN
+    Basics28                "Object should not be attached to itself..."
+    Basics29                "Server "
+    Basics30                "Windows 8"
+    Basics31                "Windows 7"
+    Basics32                "Windows Vista "
+    Basics33                " Server 4.0 "
+    Basics34                "Microsoft Windows XP Professional x64 Edition"
+    Basics35                "Microsoft Windows Server 2003, "
+    Basics36                "Microsoft Windows XP "
+    Basics37                "Microsoft Windows 2000 "
+    Basics38                "Microsoft Windows NT "
+    Basics39                "Workstation 4.0 "
+    Basics40                "Home Edition "
+    Basics41                "Professional "
+    Basics42                "Datacenter Edition for Itanium-based Systems"
+    Basics43                "Enterprise Edition for Itanium-based Systems"
+END
