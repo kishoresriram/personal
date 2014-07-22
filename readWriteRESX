@@ -1,0 +1,134 @@
+public string ResxFileUpdate(String resourceValue, String solutionPath, String projectPath)
+        {
+            Hashtable resourceEntries = new Hashtable();
+            Hashtable resourceEntries2 = new Hashtable();
+            Hashtable data = new Hashtable();
+            string updatedResKey = null;
+            string localizationResPath_actual = null;
+            string propertiesResPath_actual = null;
+            string[] localizationResPath = Directory.GetFiles(solutionPath, @"Resources.resx", SearchOption.AllDirectories);
+            string[] propertiesResPath = Directory.GetFiles(projectPath, @"Resources.resx", SearchOption.AllDirectories);
+            List<string> keyList = new List<string>();
+            string[] slnName;
+            string resSlnName;
+            int maxResKey = 0;
+            string[] dllSeparator = new string[] { @"Resources\Localization" };
+
+            foreach (var r in localizationResPath)
+            {
+                if (r.EndsWith(@"Localization\Resources.resx", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    localizationResPath_actual = r;
+                }
+            }
+            slnName = localizationResPath_actual.Split(dllSeparator, StringSplitOptions.None);
+            resSlnName = slnName[0].ToString().Substring((slnName[0].ToString().LastIndexOf(@"\")) + 1);
+
+            if (propertiesResPath.Length > 0)
+            {
+                propertiesResPath_actual = propertiesResPath[0].ToString();
+            }
+
+            #region localization/resources
+            if (localizationResPath_actual != null && localizationResPath_actual != "")
+            {
+                ResXResourceReader reader = new ResXResourceReader(localizationResPath_actual);
+                ResXResourceWriter resourceWriter = new ResXResourceWriter(localizationResPath_actual);
+
+                //string[] files = Directory.GetFiles(currentProjectPath, "*.resx", SearchOption.AllDirectories);
+
+                if (reader != null)
+                {
+                    IDictionaryEnumerator id = reader.GetEnumerator();
+
+                    foreach (DictionaryEntry d in reader)
+                    {
+                        //Read from file:
+                        string val = "";
+                        if (d.Value == null)
+                            resourceEntries2.Add(d.Key.ToString(), "");
+                        else
+                        {
+                            resourceEntries2.Add(d.Key.ToString(), d.Value.ToString());
+                            val = d.Value.ToString();
+                        }
+                        //Write (with read to keep xml file order)
+                        resourceWriter.AddResource(d.Key.ToString(), val);
+                        if ((d.Key.ToString().Contains(resSlnName)))
+                        {
+                            keyList.Add(d.Key.ToString());
+                        }
+                    }
+                    var sortedList = keyList.CustomSort().ToArray();
+                    var max = sortedList.Select(v => int.Parse(v.Substring(resSlnName.Length))).Max();
+                    maxResKey = max;
+                    reader.Close();
+                }
+
+                updatedResKey = resSlnName + (maxResKey + 1);
+                data.Add(updatedResKey, resourceValue);
+                //Add new data (at the end of the file):                
+                foreach (String key in data.Keys)
+                {
+                    if (!resourceEntries2.ContainsKey(key))
+                    {
+
+                        String value = data[key].ToString();
+                        if (value == null) value = "";
+
+                        resourceWriter.AddResource(key, value);
+                    }
+                }
+
+                //Write to file
+                resourceWriter.Generate();
+                resourceWriter.Close();
+            }
+            #endregion
+
+            #region properties/resources
+            //If current project is resource Project, propertiesResPath would be empty
+            //Get existing resources
+            if (propertiesResPath_actual != null)
+            {
+                ResXResourceReader reader_props = null;
+                ResXResourceWriter resourceWriter_props = new ResXResourceWriter(propertiesResPath_actual);
+                reader_props = new ResXResourceReader(propertiesResPath_actual);
+                reader_props.BasePath = Path.GetDirectoryName(propertiesResPath_actual);
+                foreach (DictionaryEntry pair in reader_props)
+                {
+                    if (pair.Value.GetType().FullName.ToString() == "System.String")
+                    {
+                        object obj = pair.GetType();
+                        string val = "";
+                        if (pair.Value == null)
+                            resourceEntries.Add(pair.Key.ToString(), pair.Key.ToString());
+                        else
+                        {
+                            val = (pair.Key).ToString();
+                            resourceEntries.Add(pair.Key.ToString(), pair.Key.ToString());
+                        }
+                        //Write
+                        resourceWriter_props.AddResource(pair.Key.ToString(), val);
+                    }
+                }
+                //Add new data (at the end of the file):                
+                foreach (String key in data.Keys)
+                {
+                    if (!resourceEntries.ContainsKey(key))
+                    {
+
+                        String value = data[key].ToString();
+                        if (value == null) value = "";
+
+                        resourceWriter_props.AddResource(key, value);
+                    }
+                }
+                //Write to file
+                resourceWriter_props.Generate();
+                resourceWriter_props.Close();
+            }
+            #endregion
+
+            return updatedResKey;
+        }
