@@ -1,0 +1,162 @@
+public void excelExport(List<Details> dict,string codepath)
+        {
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel._Workbook oWB = (Microsoft.Office.Interop.Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
+            Microsoft.Office.Interop.Excel._Worksheet oSheet = (Microsoft.Office.Interop.Excel._Worksheet)oWB.ActiveSheet;
+            PivotTable pivotTable = null;
+            Range pivotData = null;
+            Range pivotDestination = null;
+            PivotField englishTextRegion = null;
+            PivotField textCount = null;
+            //var uniqueTexts = dict.GroupBy(s => s.EngText).Select(s => s.Distinct().Count());
+            var projectsCount = dict.GroupBy(s => s.DLLName).Select(s => s.Distinct().Count());
+            
+            #region ResourceDetail
+            oSheet.Name = "Resource Detail";
+            
+            //fill the sheet with values from row2.
+            row = 2;
+            foreach (var p in dict)
+            {
+                column = 1;
+                oSheet.Cells[row, column] = p.ResourceID.ToString();
+                column++;
+                oSheet.Cells[row, column] = p.DLLName.ToString();
+                column++;
+                oSheet.Cells[row, column] = p.ResourceDLL.ToString();
+                column++;
+                oSheet.Cells[row, column].WrapText = true;
+                oSheet.Cells[row, column] = p.EngText.ToString();
+                row++;
+            }
+            //Sort the data by EngText
+            dynamic allDataRange = oSheet.UsedRange;
+            allDataRange.Sort(allDataRange.Columns[4], Microsoft.Office.Interop.Excel.XlSortOrder.xlAscending);
+            //include first-row as headers after sort.
+            Range cellRange = (Range)oSheet.Cells[1, 1];
+            cellRange.EntireColumn.ColumnWidth = 20;
+            cellRange.Interior.Color = Color.LightSlateGray;
+            cellRange.Font.Bold = true;
+            oSheet.Cells[1, 1] = "ResourceID";            
+
+            cellRange = (Range)oSheet.Cells[1, 2];
+            cellRange.EntireColumn.ColumnWidth = 25;
+            cellRange.Font.Bold = true;
+            cellRange.Interior.Color = Color.LightSlateGray;
+            oSheet.Cells[1, 2] = "ResourceDLL";            
+
+            cellRange = (Range)oSheet.Cells[1, 3];
+            cellRange.EntireColumn.ColumnWidth = 20;
+            cellRange.Interior.Color = Color.LightSlateGray;
+            cellRange.Font.Bold = true;
+            oSheet.Cells[1, 3] = "SolutionName";            
+
+            cellRange = (Range)oSheet.Cells[1, 4];
+            cellRange.EntireColumn.ColumnWidth = 65;
+            cellRange.Interior.Color = Color.LightSlateGray;
+            cellRange.Font.Bold = true;
+            oSheet.Cells[1, 4] = "EnglishText";
+            //freeze first row.
+            oSheet.Activate();
+            oSheet.Application.ActiveWindow.SplitRow = 1;
+            oSheet.Application.ActiveWindow.FreezePanes = true;
+            //Below Commented Code Adds Filters!
+            //Range firstRow = (Range)oSheet.Rows[1];
+            //firstRow.Activate();
+            //firstRow.Select();
+            //firstRow.AutoFilter(1,
+            //                    Type.Missing,
+            //                    Microsoft.Office.Interop.Excel.XlAutoFilterOperator.xlAnd,
+            //                    Type.Missing,
+            //                    true);
+            
+
+            #endregion
+
+            #region pivotTable
+
+            Microsoft.Office.Interop.Excel._Worksheet oSheet2 = (Microsoft.Office.Interop.Excel._Worksheet)oWB.Sheets.Add(Missing.Value, Missing.Value, 1, Missing.Value) as Microsoft.Office.Interop.Excel.Worksheet;
+            oSheet2.Name = "Resource Summary";
+            string pivotTableName = @"Sales By Region";
+            object useDefault = Type.Missing;
+            pivotData = oSheet.get_Range("A1", "D" + row);
+            pivotDestination = oSheet2.get_Range("A2", useDefault);
+            oSheet2.PivotTableWizard(
+            XlPivotTableSourceType.xlDatabase,
+            pivotData,
+            pivotDestination,
+            pivotTableName,
+            true,
+            true,
+            true,
+            true,
+            useDefault,
+            useDefault,
+            false,
+            false,
+            XlOrder.xlDownThenOver,
+            0,
+            useDefault,
+            useDefault
+            );
+            pivotTable = (PivotTable)oSheet2.PivotTables(pivotTableName);
+            textCount = ((PivotField)pivotTable.PivotFields(4));
+            englishTextRegion = ((PivotField)pivotTable.PivotFields(4));            
+            pivotTable.Format(XlPivotFormatType.xlReport2);
+            pivotTable.InGridDropZones = false;
+            englishTextRegion.Orientation =
+            XlPivotFieldOrientation.xlRowField;
+            textCount.Orientation =
+            XlPivotFieldOrientation.xlDataField;
+            textCount.Function = XlConsolidationFunction.xlCount;
+            Range firstColumn = oSheet2.Columns[1];
+            firstColumn.EntireColumn.ColumnWidth = 55;
+            Range last = oSheet2.Cells.SpecialCells(Microsoft.Office.Interop.Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+            Range range = oSheet2.get_Range("A1", last);
+            int lastUsedRow = last.Row;            
+            #endregion
+
+            #region analysis
+            Microsoft.Office.Interop.Excel._Worksheet oSheet3 = (Microsoft.Office.Interop.Excel._Worksheet)oWB.Sheets.Add(Missing.Value, Missing.Value, 1, Missing.Value) as Microsoft.Office.Interop.Excel.Worksheet;
+            oSheet3.Name = "Analysis Overview";
+            Range cRange = (Range)oSheet3.Cells[1, 1];
+            cRange.EntireColumn.ColumnWidth = 25;
+            cRange.Font.Bold = true;
+            oSheet3.Cells[1, 1] = "Total Number of Projects";
+            cRange = (Range)oSheet3.Cells[1, 2];
+            cRange.Font.Bold = true;
+            cRange.Font.Color = Color.SteelBlue;
+            oSheet3.Cells[1, 2] = projectsCount.Count();
+            cRange = (Range)oSheet3.Cells[2, 1];
+            cRange.Font.Bold = true;
+            oSheet3.Cells[2, 1] = "Embedded Strings";
+            cRange = (Range)oSheet3.Cells[2, 2];
+            cRange.Font.Bold = true;
+            cRange.Font.Color = Color.SteelBlue;
+            oSheet3.Cells[2, 2] = dict.Count;
+            cRange = (Range)oSheet3.Cells[3, 1];
+            cRange.Font.Bold = true;
+            oSheet3.Cells[3, 1] = "Unique Strings";
+            cRange = (Range)oSheet3.Cells[3, 2];
+            cRange.Font.Bold = true;
+            cRange.Font.Color = Color.SteelBlue;
+            oSheet3.Cells[3, 2] = lastUsedRow - 5;
+            cRange = (Range)oSheet3.Cells[4, 1];
+            cRange.Font.Bold = true;
+            oSheet3.Cells[4, 1] = "Date the Analysis was run";
+            cRange = (Range)oSheet3.Cells[4, 2];
+            cRange.Font.Bold = true;
+            cRange.Font.Color = Color.SteelBlue;
+            oSheet3.Cells[4, 2] = DateTime.Now.Date;
+            cRange = (Range)oSheet3.Cells[5, 1];
+            cRange.Font.Bold = true;
+            oSheet3.Cells[5, 1] = "Name of the Code-Base";
+            cRange = (Range)oSheet3.Cells[5, 2];
+            cRange.Font.Bold = true;
+            cRange.Font.Color = Color.SteelBlue;
+            oSheet3.Cells[5, 2] = codepath;
+            #endregion
+            
+            oXL.Visible = true;
+            oXL.UserControl = true;
+        }
