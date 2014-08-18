@@ -1,0 +1,25 @@
+        public void fileWrite(string lineToAdd, string fileName, int position)
+        {
+            List<string> txtLines = new List<string>();
+
+            //Fill a List<string> with the lines from the txt file.
+            foreach (string str in File.ReadAllLines(fileName))
+            {
+                txtLines.Add(str);
+            }
+
+            //Insert the line you want to add last under the tag 'item1'.
+            txtLines.Insert(position, lineToAdd);
+
+            //Clear the file. The using block will close the connection immediately.
+            using (File.Create(fileName)) { }
+            FileInfo fi = new FileInfo(fileName);
+            using (TextWriter txtWriter = new StreamWriter(fi.Open(FileMode.Truncate)))
+            {
+            }
+
+            foreach (string str in txtLines)
+            {
+                File.AppendAllText(fileName, str + Environment.NewLine);
+            }
+        }
