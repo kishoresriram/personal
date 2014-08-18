@@ -7,7 +7,7 @@ using System.Resources;
 using System.Reflection;
 using System.Globalization;
 
-namespace CPPResourceHelper
+namespace Help
 {
 	/// <summary>The object for implementing an Add-in.</summary>
 	/// <seealso class='IDTExtensibility2' />
