@@ -105,6 +105,7 @@ namespace joaInternationalizationValidator
             {
                 ResXResourceReader engWinformresReader = new ResXResourceReader(resfilePath);
                 ResXResourceReader chiWinformresReader = new ResXResourceReader(ChineseWinFormResFile);
+                //Check if this will erase the old file.
                 ResXResourceWriter chiWinformresWriter = new ResXResourceWriter(ChineseWinFormResFile);
                 Dictionary<string, string> chineseWinFormDict = new Dictionary<string, string>();
                 try
@@ -128,6 +129,7 @@ namespace joaInternationalizationValidator
                 }
                 catch (Exception ex)
                 {
+                    chineseWinFormDict = new Dictionary<string, string>();
                     XDocument xdoc = XDocument.Load(ChineseWinFormResFile, LoadOptions.None);
                     IEnumerable<XElement> dataElements = xdoc.Descendants("data");
                     foreach (XElement dataElement in dataElements)
@@ -135,25 +137,27 @@ namespace joaInternationalizationValidator
                         //Skipping Resource Key values starting with >> and having data type
                         if (!(dataElement.LastAttribute.Name.LocalName.ToString() == "type" || dataElement.LastAttribute.PreviousAttribute.Name.LocalName.ToString() == "type"))
                         {
-                            if (!dataElement.FirstAttribute.Value.StartsWith(">>") && (!dataElement.FirstAttribute.Value.ToString().StartsWith("$"))
-                                    && !dataElement.FirstAttribute.Value.ToString().Contains("UnitLabel")
-                                    && !dataElement.FirstAttribute.Value.ToString().Contains(".Dock")
-                                    && !dataElement.FirstAttribute.Value.ToString().Contains(".TextAlign"))
-                            {
-                                if (!chineseWinFormDict.ContainsKey(dataElement.FirstAttribute.Value.ToString()))
-                                {                                    
+                            //if (!dataElement.FirstAttribute.Value.StartsWith(">>") && (!dataElement.FirstAttribute.Value.ToString().StartsWith("$"))
+                            //        && !dataElement.FirstAttribute.Value.ToString().Contains("UnitLabel")
+                            //        && !dataElement.FirstAttribute.Value.ToString().Contains(".Dock")
+                            //        && !dataElement.FirstAttribute.Value.ToString().Contains(".TextAlign"))
+                            //{
+                                //if (!chineseWinFormDict.ContainsKey(dataElement.FirstAttribute.Value.ToString()))
+                                //{
                                     string key = dataElement.FirstAttribute.Value;
                                     string value = dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty);
-                                    string keyvalue = key + " " + value;                                    
-                                    count++;
-                                    chiWinformresWriter.AddResource(dataElement.FirstAttribute.Value.ToString(), dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty));
-                                }
-                            }
+                                    //string keyvalue = key + " " + value;
+                                    //count++;
+                                    //Adding in to Dictionary - To create a dictionary to evaluate.
+                                    chineseWinFormDict.Add(chinese.Key.ToString(), chinese.Value.ToString());
+                                    //chiWinformresWriter.AddResource(dataElement.FirstAttribute.Value.ToString(), dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty));
+                                //}
+                            //}
                         }
-                        else
-                        {
-                            chiWinformresWriter.AddResource(dataElement.FirstAttribute.Value.ToString(), dataElement.LastAttribute);
-                        }
+                        //else
+                        //{
+                        //    chiWinformresWriter.AddResource(dataElement.FirstAttribute.Value.ToString(), dataElement.LastAttribute);
+                        //}
 
                     }
                 }
@@ -195,19 +199,22 @@ namespace joaInternationalizationValidator
                             {
                                 if (!chineseWinFormDict.ContainsKey(dataElement.FirstAttribute.Value.ToString()))
                                 {
-                                    System.Drawing.Bitmap value1;
+                                    //System.Drawing.Bitmap value1;
                                     string key = dataElement.FirstAttribute.Value;
                                     string value = dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty);
-                                    string keyvalue = key + " " + value;
-                                    count++;
+                                    //writing in to file - create a string and write to a file.
+                                    string xmlWrite = "\t<data xml:space=\"preserve\">" + System.Environment.NewLine;
+                                    xmlWrite += "<value>" + value + "</value>" + System.Environment.NewLine + "</data>" + System.Environment.NewLine;
+                                    //string keyvalue = key + " " + value;
+                                    //count++;
                                     //chiWinformresWriter.AddResource(dataElement.FirstAttribute.Value.ToString(), dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty));
                                 }
                             }
                         }
-                        else
-                        {
+                        //else
+                        //{
                             //chiWinformresWriter.AddResource(dataElement.FirstAttribute.Value.ToString(), dataElement.LastAttribute);
-                        }
+                        //}
 
                     }
 
@@ -365,4 +372,3 @@ namespace joaInternationalizationValidator
         public string classValue { get; set; }
     }
 }
-Enter file contents here
