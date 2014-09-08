@@ -97,19 +97,23 @@ namespace joaInternationalizationValidator
         private void CopyWinFormResStrings(string winFile)
         {
             string resfilePath = winFile;
+            //resfilePath = @"D:\Code32\Jewel.Release.Yuma.Internationalization\joaJewelDataIO\1.0\joaJewelDataIO\Workflow\DataCreate\TabPages\joaPolyLineSetDataCreateUserControl.resx";
             string resfileDir = Path.GetDirectoryName(resfilePath);
             string resfileNameWithoutExt = Path.GetFileNameWithoutExtension(resfilePath);
             string ChineseWinFormResFile = Directory.GetFiles(resfileDir, resfileNameWithoutExt + ".zh-CN.resx", SearchOption.AllDirectories).FirstOrDefault();
+
+            
 
             if (File.Exists(resfilePath) && (File.Exists(resfileDir + "\\" + resfileNameWithoutExt + ".cs")) && ChineseWinFormResFile != null)
             {
                 ResXResourceReader engWinformresReader = new ResXResourceReader(resfilePath);
                 ResXResourceReader chiWinformresReader = new ResXResourceReader(ChineseWinFormResFile);
                 //Check if this will erase the old file.
-                ResXResourceWriter chiWinformresWriter = new ResXResourceWriter(ChineseWinFormResFile);
+                ResXResourceWriter chiWinformresWriter = null;// new ResXResourceWriter(ChineseWinFormResFile);
                 Dictionary<string, string> chineseWinFormDict = new Dictionary<string, string>();
                 try
                 {
+                    chiWinformresWriter = new ResXResourceWriter(ChineseWinFormResFile);
                     IDictionaryEnumerator chineseWinEnum = chiWinformresReader.GetEnumerator();
                     foreach (DictionaryEntry chinese in chiWinformresReader)
                     {
@@ -129,6 +133,11 @@ namespace joaInternationalizationValidator
                 }
                 catch (Exception ex)
                 {
+                    //if (chiWinformresWriter != null)
+                    //{
+                    //    chiWinformresWriter.Close();
+                    //    chiWinformresWriter.Dispose();
+                    //}
                     chineseWinFormDict = new Dictionary<string, string>();
                     XDocument xdoc = XDocument.Load(ChineseWinFormResFile, LoadOptions.None);
                     IEnumerable<XElement> dataElements = xdoc.Descendants("data");
@@ -142,16 +151,16 @@ namespace joaInternationalizationValidator
                             //        && !dataElement.FirstAttribute.Value.ToString().Contains(".Dock")
                             //        && !dataElement.FirstAttribute.Value.ToString().Contains(".TextAlign"))
                             //{
-                                //if (!chineseWinFormDict.ContainsKey(dataElement.FirstAttribute.Value.ToString()))
-                                //{
-                                    string key = dataElement.FirstAttribute.Value;
-                                    string value = dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty);
-                                    //string keyvalue = key + " " + value;
-                                    //count++;
-                                    //Adding in to Dictionary - To create a dictionary to evaluate.
-                                    chineseWinFormDict.Add(chinese.Key.ToString(), chinese.Value.ToString());
-                                    //chiWinformresWriter.AddResource(dataElement.FirstAttribute.Value.ToString(), dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty));
-                                //}
+                            //if (!chineseWinFormDict.ContainsKey(dataElement.FirstAttribute.Value.ToString()))
+                            //{
+                            string key = dataElement.FirstAttribute.Value;
+                            string value = dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty);
+                            //string keyvalue = key + " " + value;
+                            //count++;
+                            //Adding in to Dictionary - To create a dictionary to evaluate.
+                            chineseWinFormDict.Add(key, value);
+                            //chiWinformresWriter.AddResource(dataElement.FirstAttribute.Value.ToString(), dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty));
+                            //}
                             //}
                         }
                         //else
@@ -165,6 +174,10 @@ namespace joaInternationalizationValidator
 
                 try
                 {
+                    if (chiWinformresWriter == null)
+                    {
+                        chiWinformresWriter = new ResXResourceWriter(ChineseWinFormResFile);
+                    }
                     foreach (DictionaryEntry eng in engWinformresReader)
                     {
                         if (eng.Value.GetType().FullName.ToString() == "System.String")
@@ -185,8 +198,15 @@ namespace joaInternationalizationValidator
                 }
                 catch (Exception ex)
                 {
-                    XDocument xdoc = XDocument.Load(ChineseWinFormResFile, LoadOptions.None);
+                    //if (chiWinformresWriter != null)
+                    //{
+                    //    chiWinformresWriter.Close();
+                    //    chiWinformresWriter.Dispose();
+                    //}
+                    XDocument xdoc = XDocument.Load(resfilePath, LoadOptions.None);
                     IEnumerable<XElement> dataElements = xdoc.Descendants("data");
+                    string xmlWrite = null;
+                    var lastLine = File.ReadLines(ChineseWinFormResFile).Count();
                     foreach (XElement dataElement in dataElements)
                     {
                         //Skipping Resource Key values starting with >> and having data type
@@ -203,8 +223,8 @@ namespace joaInternationalizationValidator
                                     string key = dataElement.FirstAttribute.Value;
                                     string value = dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty);
                                     //writing in to file - create a string and write to a file.
-                                    string xmlWrite = "\t<data xml:space=\"preserve\">" + System.Environment.NewLine;
-                                    xmlWrite += "<value>" + value + "</value>" + System.Environment.NewLine + "</data>" + System.Environment.NewLine;
+                                    xmlWrite = "  <data name=\""+ key +"\" xml:space=\"preserve\">" + System.Environment.NewLine;
+                                    xmlWrite += "    <value>" + value + "</value>" + System.Environment.NewLine + "  </data>" + System.Environment.NewLine;
                                     //string keyvalue = key + " " + value;
                                     //count++;
                                     //chiWinformresWriter.AddResource(dataElement.FirstAttribute.Value.ToString(), dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty));
@@ -213,13 +233,14 @@ namespace joaInternationalizationValidator
                         }
                         //else
                         //{
-                            //chiWinformresWriter.AddResource(dataElement.FirstAttribute.Value.ToString(), dataElement.LastAttribute);
+                        //chiWinformresWriter.AddResource(dataElement.FirstAttribute.Value.ToString(), dataElement.LastAttribute);
                         //}
 
                     }
-
-
-
+                    if (xmlWrite != null)
+                    {
+                        createEntry(xmlWrite, ChineseWinFormResFile, int.Parse(lastLine.ToString()));
+                    }
                 }
                 //Write to file
                 //chiWinformresWriter.Generate();
@@ -280,7 +301,7 @@ namespace joaInternationalizationValidator
             }
 
             //Insert the line you want to add last under the tag 'item1'.
-            txtLines.Insert(chineseRCWritePosition, newLineRC);
+            txtLines.Insert(chineseRCWritePosition-1, newLineRC);
 
             //Clear the file. The using block will close the connection immediately.
             using (File.Create(chiRCFileFullPath)) { }
