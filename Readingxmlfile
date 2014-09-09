@@ -1,0 +1,15 @@
+                    XDocument xdoc = XDocument.Load(filepath, LoadOptions.None);
+                    IEnumerable<XElement> dataElements = xdoc.Descendants("data");
+                    Dictionary<string,string> dictionary = new Dictionary<string,string>()
+                    foreach (XElement dataElement in dataElements)
+                    {
+                        //Skipping Resource Key values starting with >> and having data type
+                        if (!(dataElement.LastAttribute.Name.LocalName.ToString() == "type" || dataElement.LastAttribute.PreviousAttribute.Name.LocalName.ToString() == "type"))
+                        {
+                            string key = dataElement.FirstAttribute.Value;
+                            string value = dataElement.Value.ToString().Replace("\n", string.Empty).Replace(" ", string.Empty);
+                            //Adding in to Dictionary - To create a dictionary to evaluate.
+                            dictionary.Add(key, value);
+                        }
+                    }
+                    
