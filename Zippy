@@ -1,0 +1,34 @@
+        public static void Zippy(string zipFilename, string fileToAdd, string Directory)
+        {
+            using (Package zip = Package.Open(zipFilename, FileMode.OpenOrCreate))
+            {
+                string destFilename = ".\\" + Directory + "\\" + Path.GetFileName(fileToAdd);
+                Uri uri = PackUriHelper.CreatePartUri(new Uri(destFilename, UriKind.Relative));
+                if (zip.PartExists(uri))
+                {
+                    zip.DeletePart(uri);
+                }
+                PackagePart part = zip.CreatePart(uri, "", CompressionOption.Normal);
+                using (var fileStream = new FileStream(fileToAdd, FileMode.Open, FileAccess.Read))
+                {
+                    using (Stream dest = part.GetStream())
+                    {
+                        CopyStream(fileStream, dest);
+                    }
+                }
+            }
+        }        
+        
+        
+        private static void CopyStream(FileStream inputStream, Stream outputStream)
+        {
+            long bufferSize = inputStream.Length < BUFFER_SIZE ? inputStream.Length : BUFFER_SIZE;
+            var buffer = new byte[bufferSize];
+            int bytesRead = 0;
+            long bytesWritten = 0;
+            while ((bytesRead = inputStream.Read(buffer, 0, buffer.Length)) != 0)
+            {
+                outputStream.Write(buffer, 0, bytesRead);
+                bytesWritten += bufferSize;
+            }
+        }
