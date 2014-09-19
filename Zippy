@@ -1,8 +1,8 @@
-        public static void Zippy(string zipFilename, string fileToAdd, string Directory)
+        public static void Zippy(string zipFilename, string fileToAdd, string DirectoryName)
         {
             using (Package zip = Package.Open(zipFilename, FileMode.OpenOrCreate))
             {
-                string destFilename = ".\\" + Directory + "\\" + Path.GetFileName(fileToAdd);
+                string destFilename = ".\\" + DirectoryName + "\\" + Path.GetFileName(fileToAdd);
                 Uri uri = PackUriHelper.CreatePartUri(new Uri(destFilename, UriKind.Relative));
                 if (zip.PartExists(uri))
                 {
