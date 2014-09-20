@@ -1,0 +1,146 @@
+   public void testc()
+        {
+            XmlDocument engxmlDoc = new XmlDocument();
+            XmlDocument chipldfdoc = new XmlDocument();
+
+            string chinesePath = @"C:\Users\sriram_p04\Desktop\PLDFFiles\jewelsuite_chinese.pldf";
+            engxmlDoc.Load(@"C:\Users\sriram_p04\Desktop\PLDFFiles\jewelsuite_english.pldf");
+            chipldfdoc.Load(@"C:\Users\sriram_p04\Desktop\PLDFFiles\jewelsuite_chinese.pldf");
+
+
+            HaveDifferentStructure(engxmlDoc.ChildNodes, chipldfdoc.ChildNodes, chipldfdoc,engxmlDoc, chinesePath);
+            //engxmlDoc.ChildNodes, chinesexmlDoc.ChildNodes, chinesexmlDoc, chinesePath);
+        }
+
+
+        private void HaveDifferentStructure(
+    XmlNodeList xmlNodeListA, XmlNodeList xmlNodeListB, XmlDocument chidoc,XmlDocument engdoc, string chinesePath)
+        {
+            //if (xmlNodeListA.Count != xmlNodeListB.Count) return true;
+
+            for (var i = 0; i < xmlNodeListA.Count; i++)
+            {
+                var nodeA = xmlNodeListA[i];
+                var nodeB = xmlNodeListB[i];
+
+                if (nodeA.Attributes == null)
+                {
+                    if (nodeB.Attributes != null)
+                    {
+                        //return 0;
+                    }
+                    else
+                        continue;
+                }
+                if (nodeA.Name != null && nodeB != null)
+                {
+                    if (nodeA.Name != nodeB.Name)
+                    {
+
+                    }
+                }
+                //engdoc.DocumentElement.ChildNodes[0].ChildNodes[1]
+                if (nodeB == null)
+                {
+                    XmlNode nodeToBeAdded;
+                    //var prev = XDocument.Load(filename1);
+                    //var curr = XDocument.Load(filename2);
+                    //prev.Root.Add(curr.Root.Elements());
+                    //XmlNode rootNode = doc.CreateElement(nodeA.Name);
+                    //doc.AppendChild(rootNode);
+                    //XmlNode parentNode = xmlNodeListB[i - 1].ParentNode;
+                    //if (i - 1 >= 0)
+                    //{
+                    if (nodeA.Name == "Context")
+                    {
+                        try
+                        {
+                            nodeToBeAdded = chidoc.ImportNode(chidoc.DocumentElement.ChildNodes[chidoc.DocumentElement.ChildNodes.Count - 1].ChildNodes[i], true);
+                        }
+                        catch
+                        {
+                            nodeToBeAdded = chidoc.ImportNode(engdoc.DocumentElement.ChildNodes[engdoc.DocumentElement.ChildNodes.Count - 1].ChildNodes[i], true);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            nodeToBeAdded = chidoc.ImportNode(chidoc.DocumentElement.ChildNodes[chidoc.DocumentElement.ChildNodes.Count - 1].ChildNodes[i].ChildNodes[chidoc.DocumentElement.ChildNodes[chidoc.DocumentElement.ChildNodes.Count - 1].ChildNodes[i].ChildNodes.Count - 1], true);
+                        }
+                        catch
+                        {
+                            nodeToBeAdded = chidoc.ImportNode(engdoc.DocumentElement.ChildNodes[engdoc.DocumentElement.ChildNodes.Count - 1].ChildNodes[i].ChildNodes[engdoc.DocumentElement.ChildNodes[engdoc.DocumentElement.ChildNodes.Count - 1].ChildNodes[i].ChildNodes.Count - 1], true);
+                        }
+                    }
+
+                    
+                        //XmlElement elem = chidoc.CreateElement(nodeA.Name);
+                        chidoc.DocumentElement.ChildNodes[chidoc.DocumentElement.ChildNodes.Count - 1].AppendChild(nodeToBeAdded);
+                    //}
+                    //else
+                    //{
+                    //    XmlNode nodeToBeAdded = chidoc.ImportNode(engdoc.DocumentElement.ChildNodes[i], true);
+                    //    chidoc.DocumentElement.AppendChild(nodeToBeAdded);
+                    //}
+                    //parentNode.AppendChild(elem);
+                    chidoc.Save(chinesePath);
+                }
+
+
+                for (var j = 0; j < nodeA.Attributes.Count; j++)
+                {
+                    var attrA = nodeA.Attributes[j];                   
+
+                    if (nodeB != null)
+                    {
+                        var attrB = nodeB.Attributes[j];
+
+                        if (attrA.Name != null && attrB != null)
+                        {
+                            if (attrA.Name != attrB.Name)
+                            {
+                                //return true;
+                            }
+                        }
+                    }
+                    //if (attrB == null)
+                    //{
+                    //    XmlAttribute attr = chidoc.CreateAttribute(attrA.Name); ;
+                    //    attr.Value = nodeA.Attributes[attrA.Name].InnerText;
+                    //    nodeA.Attributes.SetNamedItem(attr);
+                    //    nodeA.Attributes.InsertAfter(attr, nodeA.Attributes[0]);
+                    //    chidoc.Save(chinesePath);
+                    //}
+
+                }
+
+                if (nodeA != null && nodeB != null)
+                {
+                    if (nodeA.HasChildNodes && nodeB.HasChildNodes)
+                    {
+                        HaveDifferentStructure(nodeA.ChildNodes, nodeB.ChildNodes, chidoc, engdoc, chinesePath);
+                    }
+                    else
+                    {
+                        if (nodeA.HasChildNodes)
+                        {
+                            XmlNode nodeToBeAdded;
+                            try
+                            {
+                                nodeToBeAdded = chidoc.ImportNode(chidoc.DocumentElement.ChildNodes[chidoc.DocumentElement.ChildNodes.Count - 1].ChildNodes[i].ChildNodes[chidoc.DocumentElement.ChildNodes[chidoc.DocumentElement.ChildNodes.Count - 1].ChildNodes[i].ChildNodes.Count - 1], true);
+                            }
+                            catch
+                            {
+                                nodeToBeAdded = chidoc.ImportNode(engdoc.DocumentElement.ChildNodes[engdoc.DocumentElement.ChildNodes.Count - 1].ChildNodes[i].ChildNodes[engdoc.DocumentElement.ChildNodes[engdoc.DocumentElement.ChildNodes.Count - 1].ChildNodes[i].ChildNodes.Count - 1], true);
+                            }
+                            //XmlElement elem = chidoc.CreateElement(nodeA.Name);
+                            chidoc.DocumentElement.ChildNodes[chidoc.DocumentElement.ChildNodes.Count - 1].ChildNodes[i].AppendChild(nodeToBeAdded);
+                            chidoc.Save(chinesePath);
+                        }
+                    }
+                }
+                //doc.Save();
+            }
+            //return false;
+        }
