@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Layout Main="true">
+  <Contexts>
+    <Context id="MainMenu">
+      <Method id="File|New" text="文件|新" shortcut="CtrlN" />
+    </Context>
+    <Context id="New" text="文件|新">
+      <Method id="NewItem" />
+    </Context>
+    <Context id="New1" text="文件|新">
+      <Method id="NewItem1" />
+    </Context>
+    <Context id="New2">
+      <Method id="NewItem2" />
+    </Context>    
+  </Contexts>
+</Layout>
+
+English
+
+<?xml version="1.0" encoding="utf-8"?>
+<Layout Main="true">
+  <Contexts>
+    <Context id="MainMenu">
+      <Method id="File|New" shortcut="CtrlN" />
+    </Context>
+    <Context id="New">
+      <Method id="NewItem" />
+      <Method id="NewItem123" />
+    </Context>
+    <Context id="New1">
+      <Method id="NewItem1" />
+    </Context>
+    <Context id="New2">
+      <Method id="NewItem2" />
+    </Context>
+  </Contexts>
+</Layout>
