@@ -1,0 +1,24 @@
+
+private void ReflectionInfo(string dllfullPath)
+            {
+                AppDomain curDomain = AppDomain.CurrentDomain;
+                curDomain.ReflectionOnlyAssemblyResolve += new ResolveEventHandler(MyReflectionOnlyResolveEventHandler);
+                Assembly asm = Assembly.ReflectionOnlyLoadFrom(dllfullPath);
+                foreach (var type in asm.GetTypes())
+                {
+                  List<MethodInfo> methodInfo = type.GetMethods().ToList();
+                  FieldInfo[] fieldInfo = type.GetFields();
+                  List<PropertyInfo> propertyInfo = type.GetProperties().ToList();
+                }
+            }
+            
+private Assembly MyReflectionOnlyResolveEventHandler(object sender, ResolveEventArgs args)
+        {
+            AssemblyName name = new AssemblyName(args.Name);
+            String asmToCheck = Path.GetDirectoryName(m_rootAssembly) + "\\" + name.Name + ".dll";
+            if (File.Exists(asmToCheck))
+            {
+                return Assembly.ReflectionOnlyLoadFrom(asmToCheck);
+            }
+            return Assembly.ReflectionOnlyLoad(args.Name);
+        }
