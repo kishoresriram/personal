@@ -1,0 +1,233 @@
+# Copyright (c) 1993-1999 Microsoft Corp.
+#
+# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
+#
+# This file contains the mappings of IP addresses to host names. Each
+# entry should be kept on an individual line. The IP address should
+# be placed in the first column followed by the corresponding host name.
+# The IP address and the host name should be separated by at least one
+# space.
+#
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
+
+127.0.0.1       localhost
+
+10.249.0.30      us-hdmz-nacsvr01.ent.bhicorp.com
+172.30.241.79    BHIHRRCSA01.ent.bhicorp.com
+172.30.98.1      interchange.ent.bhicorp.com
+172.30.146.40	 us-hwwt-nacmgr01.ent.bhicorp.com	
+10.249.254.135   80,9443
+127.0.0.1        local host
+#10.249.150.18    bsshwwctx10
+172.30.144.41	MSGNAMCMS05.ent.bhicorp.com
+172.21.16.136	blrkecdms03
+10.249.150.19    InfoSys
+10.249.150.20    InfoSys
+10.249.150.21    InfoSys
+10.249.150.22    InfoSys
+10.249.150.23    InfoSys
+10.249.150.24    InfoSys
+10.249.150.25    InfoSys
+10.249.150.19    bsshwwctx11
+10.249.150.20    bsshwwctx12
+10.249.150.21    bsshwwctx13
+10.249.150.22    bsshwwctx14
+10.249.150.23    bsshwwctx15
+10.249.150.24    bsshwwctx16
+10.249.150.25    bsshwwctx17
+10.249.150.18    InfoSys
+
+bhidfwrap01	10.15.56.34
+172.30.144.38	
+10.249.150.18    bsshwwctx10.ent.bhicorp.com
+10.249.150.35    BSSHWWWEB07.ent.bhicorp.com
+10.249.150.36    BSSHWWWEB08.ent.bhicorp.com	
+10.12.63.13	MSGDFWMBX03.ent.bhicorp.com
+
+172.30.164.91	 test01.bakerhughesdirect.com    #test env 1
+
+
+
+
+10.249.1.75	bhihyppdhctl	#CTL           
+10.249.1.76	conhyppdhctl	#CTL
+10.249.1.77	bhihyppdhbhi	#BHI
+10.249.1.78	conhyppdhbhi	#BHI
+10.249.1.79	bhihyppdhbot	#BOT
+10.249.1.80	conhyppdhbot	#BOT
+10.249.1.81	bhihyppdhatl	#ATL
+10.249.1.82	conhyppdhatl	#ATL
+10.249.1.83	bhihyppdhhcc	#HCC
+10.249.1.84	conhyppdhhcc	#HCC
+10.249.1.85	bhihyppdhbdf	#BDFITQ
+10.249.1.86	conhyppdhbdf	#BDFITQ
+10.249.1.87	conhyppdhitq	#BDFITQ
+10.249.1.88	bhihyppdhbpcpdq	#BPCPDQ
+10.249.1.89	conhyppdhbpcpdq	#BPCPDQ
+10.249.1.91	bhihyppdh02	#Shared Services
+10.249.1.98	siglink		#SigLink
+10.249.1.101	dpdc01bhi	#Documentum
+10.249.1.124	bsshwwssd	#Service Desk
+10.249.1.75	bhihyppdhctl	#CTL           
+10.249.1.76	conhyppdhctl	#CTL
+10.249.1.77	bhihyppdhbhi	#BHI
+10.249.1.78	conhyppdhbhi	#BHI
+10.249.1.79	bhihyppdhbot	#BOT
+10.249.1.80	conhyppdhbot	#BOT
+10.249.1.81	bhihyppdhatl	#ATL
+10.249.1.82	conhyppdhatl	#ATL
+10.249.1.83	bhihyppdhhcc	#HCC
+10.249.1.84	conhyppdhhcc	#HCC
+10.249.1.85	bhihyppdhbdf	#BDFITQ
+10.249.1.86	conhyppdhbdf	#BDFITQ
+10.249.1.87	conhyppdhitq	#BDFITQ
+10.249.1.88	bhihyppdhbpcpdq	#BPCPDQ
+10.249.1.89	conhyppdhbpcpdq	#BPCPDQ
+10.249.1.90	bhihyppdhbiplus #BI+ (Workspace)
+10.249.1.91	bhihyppdh02	#Shared Services
+10.249.1.98	siglink		#SigLink
+10.249.1.101	dpdc01bhi	#Documentum
+10.249.1.124	bsshwwssd	#Service Desk
+10.249.1.95	bhihouapp22	#MAPS
+10.249.1.94	botemmapp02	#BOT Map02
+10.249.1.73	dwms01bhi	#Web Methods Test
+10.249.1.74	dwmd01bhi	#Web Methods Dev
+10.252.2.3	dwmp01bhi	#web Methods Production
+10.249.1.72	bsshwwpsd01	#SOLV Attachments
+10.249.1.69	bhihoufst03	#Hyperion Workspace
+10.249.1.70	bhihoufst04	#FIRST Alert Application
+10.249.1.71	bhihoufst05	#SQL Server
+10.249.1.68	bhisapdis01	#SAP Proof of Concept Server
+10.249.254.132	bhidfwrdb01	#RWD SQL Server
+10.249.254.133	bhidfwrsc01	#RWD Search Server
+10.249.254.134	bhidfwrap01	#RWD App Server
+10.249.254.135	dmrc01bhi	#Test Director Server
+10.249.254.136	dctx01bhi	#Citrix Server
+10.249.254.137	dadi01bhi	#BHI-Mercury Active Directory
+10.249.1.114	bhihwwsumdw1	#LearnLink Dev Web
+10.249.1.115	bhihwwsumds1	#LearnLink Dev SQL
+10.249.1.116	bhihwwsumsw1	#LearnLink Stg Web
+10.249.1.117	bhihwwsumrc1	#LearnLink Stg2 Web
+10.249.1.118	bhihwwsumss1	#LearnLink Stg SQL
+10.249.1.119	bhihwwsumtw1	#LearnLink Sandbox Web
+10.249.1.120	bhihwwsumts1	#LearnLink Sandbox SQL
+10.249.1.121	bldbhihwwsumps1	#LearnLink Report
+10.249.1.122	bhihwwsumps2	#LearnLink Report		
+10.252.2.69	bhihwwsumpw1	#LearnLink Production Web
+10.249.1.188	bhihwwsumps1	#LearnLink Production SQL
+147.108.135.53	peoplelink	#PeopleLink
+10.12.59.10	clarity		#Clarity
+
+172.30.164.52	 test04.bakerhughesdirect.com    #test env 4
+172.30.164.52	 test04usa.bakerhughesdirect.com    #test env 4
+
+
+
+172.30.144.37 MSGNAMCMS01.ent.bhicorp.com
+172.30.144.38 MSGNAMCMS02.ent.bhicorp.com
+172.30.144.39 MSGNAMCMS03.ent.bhicorp.com
+172.30.144.40 MSGNAMCMS04.ent.bhicorp.com
+172.30.144.41 MSGNAMCMS05.ent.bhicorp.com
+172.30.144.42 MSGNAMCMS06.ent.bhicorp.com
+
+147.108.129.70	    bhihoutfsapp
+10.12.58.26         workspace-inteq
+10.12.58.26         workspace-bhbss
+sapmsECP   3602/tcp
+sapmsPRD   3600/tcp
+sapmsBIP   3600/tcp
+sapmsECQ   3601/tcp
+sapmsECD   3601/tcp
+sapmsCRT   3600/tcp
+sapmsCRP   3600/tcp
+sapmsBIV   3600/tcp
+sapmsESB   3691/tcp
+sapmsESB   3691/tcp
+sapmsCRD   3601/tcp
+sapmsDEV   3600/tcp
+sapmsTST   3600/tcp
+sapmsCRQ   3600/tcp
+sapmsBIT   3600/tcp
+sapmsCRD   3601/tcp
+sapmsCRQ   3600/tcp
+sapmsCRP   3600/tcp
+sapmsCRD   3601/tcp
+sapmsCRQ   3600/tcp
+sapmsCRP   3600/tcp
+sapmsSRD   3601/tcp
+sapmsSRQ   3601/tcp
+sapmsSRP   3600/tcp
+sapmsCRT   3600/tcp
+sapmsBIV   3600/tcp
+sapmsBID   3600/tcp
+sapmsCRT   3600/tcp
+
+#Rajesh LMS
+
+10.15.56.95	bhidfwsumpw1	#learnlink web server
+10.15.56.103	bhidfwsumdw1    #learnlink dev web server
+10.15.56.91     bhidfwsumpa1	#hsedata load 
+10.15.56.92	bhidfwsumps1	#learnlink produciton database server
+147.108.109.124 bssabzssd01 	#solv
+10.15.56.132	bsshwwpsd01	#solv attachments
+10.15.56.93	bhidfwsumpr1	#learnlink reporting database server
+147.108.224.240 bhihnbsumdw01	#learnlinkdev
+147.108.224.28	bhihnbsumds01	#learnlinkdev database
+10.15.56.104    bhidfwsumtw1    #http://bhidfwsumtw1/learnlinksbx80 attached to reporting database, http://bhidfwsumtw1/learnlink
+
+10.15.56.105	bhidfwsumts1	#sandbox database
+10.15.56.100    BHIDFWSUMSR1    #sandbox reporting server
+10.15.56.102    BHIDFWSUMDS1
+10.15.56.94     BHIDFWSUMPR2	#production reports backup
+172.30.111.15   MSGHOUMBX04	#mailbox MSGHOUMBX04.ent.bhicorp.com
+172.30.111.9    MSGHOUMBX01 
+172.30.111.11   MSGHOUMBX02
+172.30.111.13   MSGHOUMBX03  
+10.12.63.17     MSGHOUMBX05
+10.12.63.13     MSGDFWMBX03
+172.30.96.62    webmail.bakerhughes.com
+10.15.56.98     BHIDFwSUMSW1
+10.15.56.97     BHIDFwSUMSS1
+172.21.16.136   blrkecdms03
+
+#WebApps Pulak
+172.30.241.27	VMBSSSQLDEV01	#VMBSSSQLDEV01 Database
+172.30.241.129	bsscatstsd02	#bsscatstsd02  solv tESTING
+172.30.240.39	BSSRANDW01	#ORACLE sERVER IT sERVICE
+172.30.241.67	VMBSSWEBSTG02	#VMBSSWEBSTG02 Server
+172.30.241.61	VMBSSSQLSTG02	#VMBSSSQLSTG02 Server
+147.108.128.34	bhihousql23	#bhihousql23 Server Production
+172.30.241.34	VMBSSSQLDEV02	#VMBSSSQLDEV02 Database
+172.30.241.20	vmbsswebdev01	#vmbsswebdev01 Webserver
+172.30.116.192	dwmd01bhi
+172.30.241.20	odwebservice	#vmbsswebdev01 Webserver
+
+10.12.63.13	MSGDFWMBX03
+172.30.144.40   msgnamcms04.ent.bhicorp.com
+#10.15.108.4     #msgnamcms04.ent.bhicorp.com
+10.61.13.9      MSGPERCMS01.ent.bhicorp.com
+
+172.30.96.154    MSGHOUMBX01.ent.bhicorp.com
+172.30.111.11    MSGHOUMBX02.ent.bhicorp.com
+172.30.111.13    MSGHOUMBX03.ent.bhicorp.com
+172.30.111.15    MSGHOUMBX04.ent.bhicorp.com
+10.12.63.17      MSGHOUMBX05.ent.bhicorp.com
+
+10.15.57.113     bhidfwsshr01
+10.12.94.39      itsdevosi01
+
+172.18.24.152 inthtcswe50
+10.31.20.84  BHIDFTTFS01
+10.236.89.110 bhiabqres01
+10.12.58.26   workspace-bhi
+10.167.37.69 ui1paap433x #SOLV
+10.167.40.17 CasArrayPOK.ent.bhicorp.com
+10.44.220.13    bhiabztfs01
+10.31.20.83   bhidftres01 //Build log server
+10.31.20.86   bhidftweb01
